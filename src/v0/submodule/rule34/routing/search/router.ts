@@ -3,7 +3,7 @@ import express from "express";
 import { authenticate } from "../../util/authenticate.ts";
 
 const searchRouter = express.Router()
-    .get(authenticate)
+    .use(authenticate)
     .get("/", function (req, res) {
         res.json({
             success: true,

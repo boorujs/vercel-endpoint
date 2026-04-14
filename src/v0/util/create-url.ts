@@ -5,12 +5,15 @@ export function createUrl(
     path: string[] = [],
     params: Record<any, any> = {}
 ): string {
-    base = base.replace(/\/?$/, "/");
-    path = path.join("/");
-    params = new URLSearchParams(
-        Object.entries(params)
-        .filter(([ _, value ]) => (value ?? nullish) !== nullish)
-    ).toString();
+    const url =
+        base.replace(/\/?$/, "/") +
+        path.join("/") +
+        Object.keys(params).length
+            ? "?" + new URLSearchParams(
+                Object.entries(params)
+                .filter(([ _, value ]) => (value ?? nullish) !== nullish)
+            ).toString()
+            : "";
 
-    return [ base, path, params ? `?${params}` : "" ].join("");
+    return url;
 }
