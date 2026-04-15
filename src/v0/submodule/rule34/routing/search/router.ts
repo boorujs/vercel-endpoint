@@ -8,7 +8,7 @@ import jsonResponse from "../../res/api-response/search-json.ts";
 import xmlResponse from "../../res/api-response/search-xml.ts";
 
 const searchRouter = express.Router()
-    .use(authenticate)
+    // .use(authenticate)
     .get("/", function (req, res) {
         res.json({
             success: true,
