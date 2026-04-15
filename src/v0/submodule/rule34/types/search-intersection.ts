@@ -1,4 +1,6 @@
-export interface RawSearchIntersection {
+import type { SimpleSearchIntersection } from "./simple-search-intersection.ts";
+
+export interface SearchIntersection {
     count: string;
     offset: string;
     results: {
@@ -63,4 +65,5 @@ export interface RawSearchIntersection {
             preview_height: `${number}`;
         };
     }[];
+    simplify(): SimpleSearchIntersection;
 }
