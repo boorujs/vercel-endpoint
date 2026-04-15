@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noCheck": true,
     // File Layout
     "rootDir": "./src/",
     "outDir": "./dist/",
