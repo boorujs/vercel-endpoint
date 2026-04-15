@@ -4,8 +4,7 @@ import { intersectSearchTypes } from "../../util/search/intersect-search-types.t
 
 import { authenticate } from "../../util/authenticate.ts";
 
-import jsonResponse from "../../res/api-response/search-json.ts";
-import xmlResponse from "../../res/api-response/search-xml.ts";
+import { json, xml } from "../../res/api-response/search.ts";
 
 const searchRouter = express.Router()
     // .use(authenticate)
@@ -14,7 +13,7 @@ const searchRouter = express.Router()
             success: true,
             $comment: "This is an example search. Functionality isn't available yet.",
             ...formatResults(
-                intersectSearchTypes(jsonResponse, xmlResponse).simplify()
+                intersectSearchTypes(json, xml).simplify()
             )
         });
     });

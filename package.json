@@ -6,7 +6,8 @@
   },
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "@xmldom/xmldom": "^0.9.9"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
