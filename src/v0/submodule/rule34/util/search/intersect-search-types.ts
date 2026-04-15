@@ -1,13 +1,15 @@
 import type { SearchIntersection } from "../../types/search-intersection.ts";
 import type { SimpleSearchIntersection } from "../../types/simple-search-intersection.ts";
 
-export const intersectSearchTypes = (json, xml): SearchIntersection => ({
+export const intersectSearchTypes = (json: any, xml: any): SearchIntersection => ({
     count: xml.documentElement.getAttribute("count"),
     offset: xml.documentElement.getAttribute("offset"),
     results: json.map((_, i) => ({
         json: json[i],
-        xml: Array.from(xml.documentElement.children[i].attributes)
-            .reduce((obj, i) => obj[i.name] = i.value, {})
+        xml: Object.fromEntries(
+            Array.from(xml.documentElement.children[i].attributes)
+            .map(j => [j.name, j.value])
+        )
     })),
     simplify(): SimpleSearchIntersection { return {
         count: parseInt(this.count),
