@@ -5,4 +5,4 @@ const xmlUrl =  "https://github.com/boorujs/booru.js/raw/refs/tags/v0.0.1/.brain
 
 export const json = await fetch(jsonUrl).then(r => r.json());
 export const xml = await fetch(xmlUrl).then(r => r.text())
-	.then(t => new DOMParser().parseFromString(t));
+	.then(t => new DOMParser().parseFromString(t, "text/xml"));
