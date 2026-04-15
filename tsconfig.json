@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "noCheck": true,
-    "assets": ["**/*.json", "**/*.xml"],
     // File Layout
     "rootDir": "./src/",
     "outDir": "./dist/",

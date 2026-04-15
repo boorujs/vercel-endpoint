@@ -1,9 +1,8 @@
-import FS from "node:fs/promises";
 import { DOMParser } from "@xmldom/xmldom";
 
-export const json = JSON.parse(
-	await FS.readFile("./search.json", "utf8")
-);
-export const xml = new DOMParser().parseFromString(
-	await FS.readFile("./search.xml", "utf8")
-);
+const jsonUrl = "https://github.com/boorujs/booru.js/raw/refs/tags/v0.0.1/.brainstorm/rule34.xxx/responses/formatted/search.json";
+const xmlUrl =  "https://github.com/boorujs/booru.js/raw/refs/tags/v0.0.1/.brainstorm/rule34.xxx/responses/formatted/search.xml";
+
+export const json = await fetch(jsonUrl).then(r => r.json());
+export const xml = await fetch(xmlUrl).then(r => r.text())
+	.then(t => new DOMParser().parseFromString(t));
