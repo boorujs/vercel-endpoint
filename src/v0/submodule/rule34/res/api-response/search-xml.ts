@@ -1,23 +1,16 @@
+const attributes = obj => Object.entries(obj)
+    .map(([name, value]) => ({ name, value }));
+
 const xml = {
     tagName: "posts",
-    getAttribute<A extends keyof typeof this["attr"]>(
-        attr: A
-    ): typeof this["attr"][A] {
-        return this.attr[attr];
-    },
-    private attr: {
+    attributes: attributes({
         count: "1",
         offset: "0"
-    },
+    }),
     children: [
         {
             tagName: "post",
-            getAttribute<A extends keyof typeof this["attr"]>(
-                attr: A
-            ): typeof this["attr"][A] {
-                return this.attr[attr];
-            },
-            private attr: {
+            attributes: attributes({
                 height: "1250",
                 score: "393",
                 file_url: "https://api-cdn.rule34.xxx/images/5109/0966b7bb5f64f30010d14d5e98bb81e4.jpeg",
@@ -41,7 +34,7 @@ const xml = {
                 has_comments: "true",
                 preview_width: "136",
                 preview_height: "150"
-            }
+            })
         }
     ]
 };
