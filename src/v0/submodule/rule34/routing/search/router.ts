@@ -2,105 +2,93 @@ import express from "express";
 
 import { authenticate } from "../../util/authenticate.ts";
 
+import jsonResponse from "../../res/api-response/search-json.ts";
+import xmlResponse from "../../res/api-response/search-xml.ts";
+
 const searchRouter = express.Router()
     .use(authenticate)
     .get("/", function (req, res) {
         res.json({
             success: true,
             $comment: "This is an example search. Functionality isn't available yet.",
-            count: 1,
-            results: [
-                {
-                    id: 5823623,
-                    createdAt: 1647568922,
-                    updatedAt: 1680758419,
-                    file: {
-                        main: {
-                            url: "https://api-cdn.rule34.xxx/images/5109/0966b7bb5f64f30010d14d5e98bb81e4.jpeg",
-                            size: [ 1136, 1250 ],
+            count: parseInt(xml.getAttribute("count")),
+            results: jsonResponse.map((_, i) => {
+                const json = jsonResponse[i]!;
+                const xml = xmlResponse.children[i]!;
+                const prop = (prop: keyof typeof json) => json[prop];
+                const attr = (attr: Parameters<typeof xml["getAttribute"]>[0]) => xml.getAttribute(attr);
+
+                return [
+                    {
+                        id: prop("id"),
+                        createdAt: Date.parse(attr("created_at")) / 1000,
+                        updatedAt: prop("change"),
+                        file: {
+                            main: {
+                                url: prop("file_url"),
+                                size: [
+                                    prop("width"),
+                                    prop("height")
+                                ],
+                            },
+                            sample: {
+                                has: prop("sample"),
+                                url: prop("sample_url"),
+                                size: [
+                                    prop("sample_width"),
+                                    prop("sample_height")
+                                ]
+                            },
+                            preview: {
+                                url: prop("preview_url"),
+                                size: [
+                                    parseInt(attr("preview_width")),
+                                    parseInt(attr("preview_height"))
+                                ]
+                            },
+                            ext: prop("image").match(/(?<=\.)[^.]*$/)[0],
+                            md5: prop("hash"),
+                            directory: prop("directory").toString()
                         },
-                        sample: {
-                            has: false,
-                            url: "https://api-cdn.rule34.xxx/images/5109/0966b7bb5f64f30010d14d5e98bb81e4.jpeg",
-                            size: [ 1136, 1250 ]
+                        score: prop("score"),
+                        tags: prop("tag_info").reduce((obj, i) => {
+                            const propMap = {
+                                "copyright": "copyright",
+                                "character": "character",
+                                "artist": "artist",
+                                "tag": "general",
+                                "metadata": "metadata",
+                                [null]: "ambiguous"
+                            };
+                            obj[propMap[i.type]].push({
+                                name: i.tag,
+                                count: i.count
+                            });
                         },
-                        preview: {
-                            url: "https://api-cdn.rule34.xxx/thumbnails/5109/thumbnail_0966b7bb5f64f30010d14d5e98bb81e4.jpg",
-                            size: [ 136, 150 ]
+                        {
+                            copyright: [],
+                            character: [],
+                            artist: [],
+                            general: [],
+                            metadata: [],
+                            ambiguous: []
+                        }),
+                        status: prop("status"),
+                        rating: attr("rating"),
+                        source: prop("source"),
+                        relationships: {
+                            parentId: prop("parent_id") || null,
+                            hasChildren: attr("has_children") === "true"
                         },
-                        ext: "jpeg",
-                        md5: "0966b7bb5f64f30010d14d5e98bb81e4",
-                        directory: "5109"
-                    },
-                    score: 399,
-                    tags: {
-                        copyright: [
-                            { name: "terraria", count: 5423 }
-                        ],
-                        character: [
-                            { name: "zoologist_(terraria)", count: 1138 }
-                        ],
-                        artist: [
-                            { name: "inkplasm", count: 623 },
-                            { name: "welwraith", count: 1492 }
-                        ],
-                        general: [
-                            { name: "1girls", count: 4616241 },
-                            { name: "anthro", count: 2832899 },
-                            { name: "anthro_only", count: 102145 },
-                            { name: "belt", count: 95363 },
-                            { name: "big_breasts", count: 3226823 },
-                            { name: "breasts", count: 7547318 },
-                            { name: "cleavage", count: 742398 },
-                            { name: "clothed", count: 845053 },
-                            { name: "clothed_female", count: 124105 },
-                            { name: "dark_skin", count: 924316 },
-                            { name: "dark-skinned_female", count: 399881 },
-                            { name: "dog_ears", count: 26305 },
-                            { name: "female", count: 9697675 },
-                            { name: "female_only", count: 1969478 },
-                            { name: "fully_clothed", count: 91239 },
-                            { name: "furry", count: 968626 },
-                            { name: "furry_only", count: 211582 },
-                            { name: "hair", count: 1188756 },
-                            { name: "heart", count: 536626 },
-                            { name: "jeans", count: 40657 },
-                            { name: "long_hair", count: 2434323 },
-                            { name: "no_humans", count: 70494 },
-                            { name: "non-nude", count: 3195 },
-                            { name: "pants", count: 144495 },
-                            { name: "red_hair", count: 662882 },
-                            { name: "redhead", count: 33962 },
-                            { name: "shirt", count: 400453 },
-                            { name: "smile", count: 1682081 },
-                            { name: "smiling", count: 202425 },
-                            { name: "solo", count: 3753091 },
-                            { name: "solo_female", count: 658968 },
-                            { name: "tail", count: 1013706 },
-                            { name: "white_sclera", count: 9314 }
-                        ],
-                        metadata: [
-                            { name: "2d", count: 439311 },
-                            { name: "color", count: 190089 },
-                            { name: "full_color", count: 18426 }
-                        ],
-                        ambiguous: []
-                    },
-                    status: "active",
-                    rating: "q",
-                    source: "",
-                    relationships: {
-                        parentId: null,
-                        hasChildren: false
-                    },
-                    uploader: {
-                        username: "groyvleslut",
-                        id: 1550138,
-                    },
-                    hasNotes: false,
-                    commentCount: 22
-                }
-            ]
+                        uploader: {
+                            username: prop("owner"),
+                            id: parseInt(attr("creator_id")),
+                        },
+                        hasNotes: prop("has_notes"),
+                        commentCount: prop("comment_count")
+                    }
+                ];
+            })
         });
     });
 
