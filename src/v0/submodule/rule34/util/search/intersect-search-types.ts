@@ -14,7 +14,7 @@ export const intersectSearchTypes = (json: any, xml: any): SearchIntersection =>
     simplify(): SimpleSearchIntersection { return {
         count: parseInt(this.count),
         offset: parseInt(this.offset),
-        results: this.results.map(({json, xml}) => ({
+        results: this.results.map(({ json, xml }) => ({
             ...json,
             xml_rating: xml.rating,
             creator_id: parseInt(xml.creator_id),

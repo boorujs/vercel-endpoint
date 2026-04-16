@@ -42,35 +42,25 @@ export const formatResults = (results: SimpleSearchIntersection) => ({
     }))
 });
 
-const tagCatMap = {
-    "copyright": "copyright",
-    "character": "character",
-    "artist": "artist",
-    "tag": "general",
-    "metadata": "metadata",
-    [null]: "ambiguous"
-};
+const tagCatMap = new Map();
+tagCatMap.set("copyright", "copyright");
+tagCatMap.set("character", "character");
+tagCatMap.set("artist",    "artist"   );
+tagCatMap.set("tag",       "general"  );
+tagCatMap.set("metadata",  "metadata" );
+tagCatMap.set(null,        "ambiguous");
 
-function formatTags(tags: {
-    count: number;
-    type: "copyright" | "character" | "artist" | "tag" | "metadata" | null;
-    tag: string;
-}[]) {
-    const formatted = Object.fromEntries([
-        "copyright",
-        "character",
-        "artist",
-        "general",
-        "metadata",
-        "ambiguous"
-    ].map(i => [ i, [] as { name: string; count: number; }[] ]));
-
-    tags.forEach(i =>
-        formatted[tagCatMap[i.type]]!.push({
-            name: i.tag,
-            count: i.count
-        })
+function formatTags(
+    tags: SimpleSearchIntersection["results"][number]["tag_info"]
+) {
+    const formatted = Object.fromEntries(
+        Array.from(tagCatMap.values()).map(i => [ i, [] ])
     );
+
+    tags.forEach(i => formatted[tagCatMap.get(i.type)].push({
+        name: i.tag,
+        count: i.count
+    }));
 
     return formatted;
 }
