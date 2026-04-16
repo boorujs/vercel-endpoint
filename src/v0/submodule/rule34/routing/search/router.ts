@@ -26,7 +26,7 @@ const searchRouter = express.Router()
             json: 1,
             fields: "tag_info"
         }));
-        const xml = await fetchAndParse.xml(query);
+        const xml = await fetchAndParse.xml(apiUrl("post", query));
 
         res.json({
             success: true,
