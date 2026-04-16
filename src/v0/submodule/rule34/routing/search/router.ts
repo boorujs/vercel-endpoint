@@ -18,7 +18,7 @@ const searchRouter = express.Router()
             api_key: AUTH.api_key,
             tags: req.query.q,
             limit: req.query.limit || 42,
-            page: req.query.page || 0
+            pid: req.query.page || 0
         };
 
         const json = await fetchAndParse.json(apiUrl("post", {

@@ -8,12 +8,12 @@ export function createUrl({ base, path = [], params = {} }: {
     const url =
         base.replace(/\/?$/, "/") +
         path.join("/") +
-        Object.keys(params).length
+        (Object.keys(params).length
             ? "?" + new URLSearchParams(
                 Object.entries(params)
                 .filter(([ _, value ]) => (value ?? nullish) !== nullish)
             ).toString()
-            : "";
+            : "");
 
     return url;
 }
