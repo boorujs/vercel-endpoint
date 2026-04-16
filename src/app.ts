@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(versionRouter);
 
-const port = process.env.PORT;
+const port = process.env.PORT ?? 6767;
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}.`);
