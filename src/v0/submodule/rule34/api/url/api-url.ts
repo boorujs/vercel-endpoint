@@ -18,30 +18,15 @@ let getUrl = (
 
 export function apiUrl<S extends keyof ApiUrlParameterMap>(
     s: S,
-    params: ApiUrlParameterMap[S]["params"],
-    ...args: ApiUrlParameterMap[S]["args"]
-): string;
-export function apiUrl<S extends "post">(
-    s: S,
-    params: Omit<ApiUrlParameterMap[S]["params"], "json">,
-    bothFormats: true
-): { json: string; xml: string; };
-
-export function apiUrl<S extends keyof ApiUrlParameterMap>(
-    s: S,
-    params: ApiUrlParameterMap[S]["params"],
-    ...args: ApiUrlParameterMap[S]["args"]
-) {
+    params: ApiUrlParameterMap[S]
+): string {
     switch (s) {
         case "autocomplete": return createUrl({
             base: BASE_URL,
             path: [ "autocomplete.php" ],
             params: params
         });
-        case "post": if (args[0]) return {
-            xml:  getUrl(s, { ...params, json: 0 }),
-            json: getUrl(s, { ...params, json: 1 })
-        };
+        case "post":
         case "comment":
         default:
             return getUrl(s, params);

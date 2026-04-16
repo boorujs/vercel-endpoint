@@ -1,34 +1,24 @@
 export interface ApiUrlParameterMap {
     "autocomplete": {
-        params: { q: string; };
-        args: [];
+        q: string;
     };
     "post": {
-        params: {
-            user_id: number;
-            api_key: string;
-            tags?: string;
-            id?: number;
-            limit?: number;
-            pid?: number;
-            json?: 0 | 1;
-            fields?: "tag_info";
-        };
-        args: [ bothFormats?: boolean ];
+        user_id: number;
+        api_key: string;
+        tags?: string;
+        id?: number;
+        limit?: number;
+        pid?: number;
+        json?: 0 | 1;
+        fields?: "tag_info";
     };
     "comment": {
-        params: {
-            user_id: number;
-            api_key: string;
-            post_id?: number;
-        };
-        args: [];
+        user_id: number;
+        api_key: string;
+        post_id?: number;
     };
     "tag": {
-        params: {
-            id?: number;
-            limit?: number;
-        };
-        args: [];
+        id?: number;
+        limit?: number;
     };
 }
