@@ -1,10 +1,10 @@
 const nullish = Symbol("nullish");
 
-export function createUrl(
+export function createUrl({ base, path = [], params = {} }: {
     base: string,
-    path: string[] = [],
-    params: Record<any, any> = {}
-): string {
+    path: string[],
+    params: Record<any, any>
+}): string {
     const url =
         base.replace(/\/?$/, "/") +
         path.join("/") +
