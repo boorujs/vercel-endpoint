@@ -27,12 +27,16 @@ const embedRouter = express.Router()
             user_id: AUTH.user_id,
             api_key: AUTH.api_key,
             id: id,
-            json: 1
+            json: 1,
+            fields: "tag_info"
         })).then(r => r[0]);
 
         const embed = {
-            "theme-color": "#aae5a4"
-            // TODO: add title and description and stuff
+            "theme-color": "#aae5a4",
+            "og:title": post.tag_info
+                .filter(i => i.type === "artist")
+                .map(i => `${i.tag} (${i.count})`)
+                .join(", ")
         };
 
         if (!post.image.match(/mp4$/)) {
