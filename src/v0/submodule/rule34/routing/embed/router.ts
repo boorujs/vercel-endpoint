@@ -13,7 +13,7 @@ const embeddingClientRegex =
     /(discordbot|telegrambot|facebook|whatsapp|firefox\/92|vkshare|revoltchat|preview|iframely)/gi;
 
 const embedRouter = express.Router()
-    .get(/\/embed\/\d+/, async function (req, res) {
+    .get(/\/\d+/, async function (req, res) {
         const id = req.path.match(/\d+(?=\/?$)/)?.[0];
 
         if (!req.get("User-Agent")?.match(embeddingClientRegex)) {
@@ -66,3 +66,5 @@ const embedRouter = express.Router()
             });
         }
     });
+
+export default embedRouter;
