@@ -43,7 +43,8 @@ const embedRouter = express.Router()
                 "twitter:image:height": post.height,
                 "og:image": post.file_url,
                 "og:image:width": post.width,
-                "og:image:height": post.height
+                "og:image:height": post.height,
+                "twitter:card": "summary_large_image"
             }));
         } else {
             const sizeMult =
@@ -53,17 +54,18 @@ const embedRouter = express.Router()
 
             res.send(renderEmbed({
                 ...embed,
-                "twitter:player:height": post.height * sizeMult,
                 "twitter:player:width": post.width * sizeMult,
+                "twitter:player:height": post.height * sizeMult,
                 "twitter:player:stream": post.file_url,
                 "twitter:player:stream:content_type": "video/mp4",
                 "og:video": post.file_url,
                 "og:video:secure_url": post.file_url,
-                "og:video:height":  post.height * sizeMult,
                 "og:video:width":  post.width * sizeMult,
+                "og:video:height":  post.height * sizeMult,
                 "og:video:type": "video/mp4",
                 "og:image": post.sample_url,
-                "twitter:image": "0"
+                "twitter:image": "0",
+                "twitter:card": "player"
             }));
         }
     });
