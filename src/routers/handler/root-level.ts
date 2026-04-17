@@ -6,4 +6,4 @@ const rootLevel = () => function rootLevel(req, res, next) {
     else next();
 }
 
-export default rootLevelHandler;
+export default rootLevel;
