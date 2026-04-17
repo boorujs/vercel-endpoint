@@ -26,7 +26,8 @@ const embedRouter = express.Router()
         const post = await fetchAndParse.json(apiUrl("post", {
             user_id: AUTH.user_id,
             api_key: AUTH.api_key,
-            id: id
+            id: id,
+            json: 1
         })).then(r => r[0]);
 
         const embed = {
