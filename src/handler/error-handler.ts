@@ -1,7 +1,9 @@
 const errorHandler = () => function errorHandler(err, req, res, next) {
+    console.error(err);
+    
     res.status(500).json({
         success: false,
-        error: {
+        reason: {
             message: "An internal server error occured.",
             error: {
                 name: err.name,
