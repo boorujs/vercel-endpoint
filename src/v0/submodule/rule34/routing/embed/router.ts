@@ -31,7 +31,7 @@ const embedRouter = express.Router()
             fields: "tag_info"
         })).then(r => r[0]);
 
-        const embed = {
+        const meta = {
             "theme-color": "#aae5a4",
             "og:title": post.tag_info
                 .filter(i => i.type === "artist")
@@ -41,14 +41,16 @@ const embedRouter = express.Router()
 
         if (!post.image.match(/mp4$/)) {
             res.send(renderEmbed({
-                ...embed,
-                "twitter:image": post.file_url,
-                "twitter:image:width": post.width,
-                "twitter:image:height": post.height,
-                "og:image": post.file_url,
-                "og:image:width": post.width,
-                "og:image:height": post.height,
-                "twitter:card": "summary"
+                meta: {
+                    ...meta,
+                    "twitter:image": post.file_url,
+                    "twitter:image:width": post.width,
+                    "twitter:image:height": post.height,
+                    "og:image": post.file_url,
+                    "og:image:width": post.width,
+                    "og:image:height": post.height,
+                    "twitter:card": "summary_large_image"
+                }
             }));
         } else {
             const sizeMult =
@@ -57,19 +59,21 @@ const embedRouter = express.Router()
                         : 1;
 
             res.send(renderEmbed({
-                ...embed,
-                "twitter:player:width": post.width * sizeMult,
-                "twitter:player:height": post.height * sizeMult,
-                "twitter:player:stream": post.file_url,
-                "twitter:player:stream:content_type": "video/mp4",
-                "og:video": post.file_url,
-                "og:video:secure_url": post.file_url,
-                "og:video:width":  post.width * sizeMult,
-                "og:video:height":  post.height * sizeMult,
-                "og:video:type": "video/mp4",
-                "og:image": post.sample_url,
-                "twitter:image": "0",
-                "twitter:card": "player"
+                meta: {
+                    ...meta,
+                    "twitter:player:width": post.width * sizeMult,
+                    "twitter:player:height": post.height * sizeMult,
+                    "twitter:player:stream": post.file_url,
+                    "twitter:player:stream:content_type": "video/mp4",
+                    "og:video": post.file_url,
+                    "og:video:secure_url": post.file_url,
+                    "og:video:width":  post.width * sizeMult,
+                    "og:video:height":  post.height * sizeMult,
+                    "og:video:type": "video/mp4",
+                    "og:image": post.sample_url,
+                    "twitter:image": "0",
+                    "twitter:card": "player"
+                }
             }));
         }
     });
