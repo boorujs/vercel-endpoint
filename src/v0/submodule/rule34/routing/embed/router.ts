@@ -48,7 +48,7 @@ const embedRouter = express.Router()
                 "og:image": post.file_url,
                 "og:image:width": post.width,
                 "og:image:height": post.height,
-                "twitter:card": "summary_large_image"
+                "twitter:card": "summary"
             }));
         } else {
             const sizeMult =
