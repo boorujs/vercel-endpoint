@@ -39,6 +39,13 @@ const embedRouter = express.Router()
                 .join(", ")
         };
 
+        const link = [
+            {
+                type: "application/json+oembed",
+                href: "https://boorujs.github.io/vercel-endpoint/embed/oembed.json"
+            }
+        ];
+
         if (!post.image.match(/mp4$/)) {
             res.send(renderEmbed({
                 meta: {
@@ -50,7 +57,10 @@ const embedRouter = express.Router()
                     "og:image:width": post.width,
                     "og:image:height": post.height,
                     "twitter:card": "summary_large_image"
-                }
+                },
+                link: [
+                    ...link
+                ]
             }));
         } else {
             const sizeMult =
@@ -73,7 +83,10 @@ const embedRouter = express.Router()
                     "og:image": post.sample_url,
                     "twitter:image": "0",
                     "twitter:card": "player"
-                }
+                },
+                link: [
+                    ...link
+                ]
             }));
         }
     });
