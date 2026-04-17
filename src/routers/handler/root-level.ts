@@ -1,4 +1,4 @@
-const rootLevelHandler = () => function rootLevel(req, res, next) {
+const rootLevel = () => function rootLevel(req, res, next) {
     const embeddingClientRegex =
         /(discordbot|telegrambot|facebook|whatsapp|firefox\/92|vkshare|revoltchat|preview|iframely)/gi;
     if (req.get("User-Agent")?.match(embeddingClientRegex))

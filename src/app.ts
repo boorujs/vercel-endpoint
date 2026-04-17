@@ -1,22 +1,20 @@
 import express from "express";
-import cors from "cors";
-import errorHandler from "./handler/error-handler.ts";
-import notFoundHandler from "./handler/not-found-handler.ts";
-import rootLevelHandler from "./handler/root-level-handler.ts";
 
-import versionRouter from "./version/router.ts";
+import cors from "cors";
+import versionRouter from "./routers/version/router.ts";
+import rootLevel from "./routers/handler/root-level.ts";
+import notFound from "./routers/handler/not-found.ts";
+import errorHandler from "./handler/error-handler.ts";
 
 const app = express();
 
 // init
+
 app.use(cors());
 
-// versions
 app.use(versionRouter);
-
-// handlers
-app.get("/", rootLevelHandler());
-app.use(notFoundHandler());
+app.get("/", rootLevel());
+app.use(notFound());
 app.use(errorHandler());
 
 const port = process.env.PORT ?? 6767;
