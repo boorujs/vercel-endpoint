@@ -8,4 +8,4 @@ const notFoundHandler = () => function notFound(req, res, next) {
     });
 }
 
-export default notFoundHandler();
+export default notFoundHandler;
