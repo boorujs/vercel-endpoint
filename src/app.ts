@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import versionRouter from "./version-router.ts";
+import versionRouter from "./version/router.ts";
 
 const app = express();
 
