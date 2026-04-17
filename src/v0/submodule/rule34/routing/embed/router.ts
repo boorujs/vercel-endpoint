@@ -36,7 +36,7 @@ const embedRouter = express.Router()
         };
 
         if (!post.image.match(/mp4$/)) {
-            renderEmbed({
+            res.send(renderEmbed({
                 ...embed,
                 "twitter:image": post.file_url,
                 "twitter:image:width": post.width,
@@ -44,14 +44,14 @@ const embedRouter = express.Router()
                 "og:image": post.file_url,
                 "og:image:width": post.width,
                 "og:image:height": post.height
-            });
+            }));
         } else {
             const sizeMult =
                 (post.width > 1920 || post.height > 1920) ? 0.5
                     : (post.width < 400 && post.height < 400) ? 2
                         : 1;
 
-            renderEmbed({
+            res.send(renderEmbed({
                 ...embed,
                 "twitter:player:height": post.height * sizeMult,
                 "twitter:player:width": post.width * sizeMult,
@@ -64,7 +64,7 @@ const embedRouter = express.Router()
                 "og:video:type": "video/mp4",
                 "og:image": post.sample_url,
                 "twitter:image": "0"
-            });
+            }));
         }
     });
 
