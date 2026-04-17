@@ -16,8 +16,8 @@ app.use(versionRouter);
 
 // handlers
 app.use(notFoundHandler());
+app.get("/", rootLevelHandler());
 app.use(errorHandler());
-app.use(rootLevelHandler());
 
 const port = process.env.PORT ?? 6767;
 
