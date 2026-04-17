@@ -1,4 +1,4 @@
-const notFoundHandler = () => function notFoundHandler(req, res, next) {
+const notFoundHandler = () => function notFound(req, res, next) {
     res.status(404).json({
         success: false,
         reason: {
