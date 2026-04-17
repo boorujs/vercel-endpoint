@@ -8,8 +8,13 @@ import versionRouter from "./version/router.ts";
 
 const app = express();
 
+// init
 app.use(cors());
+
+// versions
 app.use(versionRouter);
+
+// handlers
 app.use(notFoundHandler());
 app.use(errorHandler());
 app.use(rootLevelHandler());
